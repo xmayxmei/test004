@@ -1,0 +1,78 @@
+import win.ui;
+import inet.whttp;
+import web.json;
+import console;
+/*DSG{{*/
+mainForm = ..win.form(text="AAuto工程";right=654;bottom=422;border="none")
+mainForm.add()
+/*}}*/
+
+
+
+
+import web.layout; 
+import web.layout.behavior.windowCommand;
+import web.layout.behavior.tabs;
+
+
+wbLayout = web.layout( mainForm )  
+
+if( _STUDIO_INVOKED ){
+	import web.layout.debug;
+	wbLayout.attachEventHandler( web.layout.debug );
+}
+
+wbLayout.go("/layout/main.html") 
+ 
+import win.ui.shadow;
+win.ui.shadow(mainForm); //添加阴影边框
+mainForm.transparent(true);
+mainForm.show() 
+var curId = 0; //
+//var curLi = wbLayout.getEle("test_"+curId);
+//pbox
+//curLi.insertAdjacentHTML("beforeBegin","");
+//Whttp post
+wpost=function(url,postinfo){
+    var whttp = inet.whttp();
+    var  html = whttp.post(url, postinfo);//
+   
+    result=tools.string.Encode(html);//将网页编码转换为中文 
+    whttp.close();//关闭网络连接
+    return result;
+}
+
+//Whttp post
+wget=function(url){
+	var whttp = inet.whttp();
+    var  html = whttp.get(url);//
+    result= string.fromto(html,65001,936);//将网页编码转换为中文 
+    whttp.close();//关闭网络连接
+    return result;
+}
+
+var getLastedHtml = function(){
+	var html = wget("http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=7&wxNumber=tebon518");
+	console.log(html);
+	var tab = web.json.parse(html);
+	var o;
+	console.log(tab.code.text);
+	for(k,v in tab){
+   	 	
+	}
+	
+	
+};
+getLastedHtml();
+
+
+tmid = mainForm.addtimer(
+	1000/*毫秒*/,
+	function(hwnd,msg,id,tick){//定时执行代码
+		
+		//mainForm.killtimer(id)//移除此定时器
+		//mainForm.settimer(id,2000)//重新设定时间间隔
+	}
+);
+
+return win.loopMessage(); 
