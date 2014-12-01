@@ -1,0 +1,12 @@
+﻿html,body {margin:0px;}
+img {border:0}
+.body_back{background-color:#6699FF;background-size:100%;}
+.title{width:673px;float:left}
+.title_contaxt{font-size:45px; font-weight:bold;text-align:center}
+.person_box{margin:40px;overflow:hidden}
+.in-box{padding:10px 15px;overflow:hidden; background:#FFF;border-radius:10px; -moz-border-radius:10px;-webkit-border-radius:10px; color:#000; position:relative;margin: 0 0 20px 0;}
+.photo{height: 70px;width:70px;border-radius: 50%; float:left;}
+.box_contaxt{margin:0 0 0 100px;overflow:hidden;font-size: 24px;}
+.show_text{color:red;padding:10px 0 0 0; line-height:32px;}
+.show_text img{max-width:750px;}
+.show_time{position:absolute; top:6px; right:10px; font-size:18px;color:#999;font-weight:bold;}

@@ -3,12 +3,9 @@ import inet.whttp;
 import web.json;
 import console;
 /*DSG{{*/
-mainForm = ..win.form(text="AAuto工程";right=654;bottom=422;border="none")
+mainForm = ..win.form(text="AAuto工程";right=1000;bottom=600;border="none")
 mainForm.add()
 /*}}*/
-
-
-
 
 import web.layout; 
 import web.layout.behavior.windowCommand;
@@ -26,12 +23,14 @@ wbLayout.go("/layout/main.html")
  
 import win.ui.shadow;
 win.ui.shadow(mainForm); //添加阴影边框
-mainForm.transparent(true);
+//mainForm.transparent(true);
 mainForm.show() 
 var curId = 0; //
 //var curLi = wbLayout.getEle("test_"+curId);
 //pbox
 //curLi.insertAdjacentHTML("beforeBegin","");
+
+var templ = '<div class="in-box"><img src="$img" width="640" height="640" class="photo"><div class="box_contaxt"><p>$title</p><p class="show_text">$context</p></div><div class="show_time"> $time </div></div>';
 //Whttp post
 wpost=function(url,postinfo){
     var whttp = inet.whttp();
@@ -53,14 +52,43 @@ wget=function(url){
 
 var getLastedHtml = function(){
 	var html = wget("http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=7&wxNumber=tebon518");
-	console.log(html);
+	//console.log(html);
 	var tab = web.json.parse(html);
-	var o;
-	console.log(tab.code.text);
-	for(k,v in tab){
-   	 	
+	var tabobj = tab["obj"];
+	//console.log(tab);
+	var pbox ="";
+	for(k,v in tabobj){
+		var tablist = tabobj[k];
+		/**
+		for(k,v in tablist){
+			console.log(tablist[k]);
+		}
+		console.log();
+		console.log(tablist[2]);
+		console.log(tablist[3]);
+		console.log(tablist[4]);
+		console.log(tablist[5]);
+		console.log(tablist[6]);
+		**/
+		var pb = templ;
+		var context ;
+		if(tablist[1]=='1'){
+			context = "<img src='"+ tablist[2] +"'/>";
+		}else{
+			context = tablist[2];
+		}
+		pb = string.replace(pb,"$img",tablist[5]);
+		pb = string.replace(pb,"$title",tablist[4]);
+		pb = string.replace(pb,"$context",context);
+		pb = string.replace(pb,"$time",tablist[3]);
+		pbox += pb;
+		//console.log(v);
+		//console.log(tab[k]);
 	}
-	
+	//console.log(tab.skuMap[ "obj" ]);
+	var person_box = wbLayout.getEle("person_box");
+	person_box.innerHTML = "";
+	person_box.innerHTML = pbox;
 	
 };
 getLastedHtml();
@@ -69,9 +97,10 @@ getLastedHtml();
 tmid = mainForm.addtimer(
 	1000/*毫秒*/,
 	function(hwnd,msg,id,tick){//定时执行代码
-		
+		getLastedHtml();
 		//mainForm.killtimer(id)//移除此定时器
 		//mainForm.settimer(id,2000)//重新设定时间间隔
+		return 5*1000;
 	}
 );
 
