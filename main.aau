@@ -25,12 +25,13 @@ import win.ui.shadow;
 win.ui.shadow(mainForm); //ÃÌº”“ı”∞±ﬂøÚ
 //mainForm.transparent(true);
 mainForm.show() 
+mainForm.setPos(0,0,win.getScreen() );
 var curId = 0; //
 //var curLi = wbLayout.getEle("test_"+curId);
 //pbox
 //curLi.insertAdjacentHTML("beforeBegin","");
 
-var templ = '<div class="in-box"><img src="$img" width="640" height="640" class="photo"><div class="box_contaxt"><p>$title</p><p class="show_text">$context</p></div><div class="show_time"> $time </div></div>';
+var templ = '<div class="in-box"><img src="$img" class="photo"><div class="box_contaxt"><p>$title</p><p class="show_text">$context</p></div><div class="show_time"> $time </div></div>';
 //Whttp post
 wpost=function(url,postinfo){
     var whttp = inet.whttp();
