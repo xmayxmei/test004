@@ -1,16 +1,16 @@
 import win.ui;
+import win.ui.menu;
 import inet.whttp;
 import web.json;
 import console;
-/*DSG{{*/
-mainForm = ..win.form(text="AAuto工程";right=1000;bottom=600;border="none")
-mainForm.add()
-/*}}*/
-
+import win.ui.shadow;
 import web.layout; 
 import web.layout.behavior.windowCommand;
 import web.layout.behavior.tabs;
-
+/*DSG{{*/
+mainForm = ..win.form(text="微信墙";right=320;bottom=231;topmost=1)
+mainForm.add()
+/*}}*/
 
 wbLayout = web.layout( mainForm )  
 
@@ -20,26 +20,35 @@ if( _STUDIO_INVOKED ){
 }
 
 wbLayout.go("/layout/main.html") 
- 
-import win.ui.shadow;
+var url = "http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=8&wxNumber=tebon518";//取数地址，聊天室号
+var intev = 5;//刷新频率
+var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_photo"><div class="show_content"><p class="nick_name">$nick_name</p><p class="show_text">$show_text</p></div><div class="show_time">$show_time</div></div>';
+
 win.ui.shadow(mainForm); //添加阴影边框
 //mainForm.transparent(true);
-mainForm.show() 
-mainForm.setPos(0,0,win.getScreen() );
-var curId = 0; //
-//var curLi = wbLayout.getEle("test_"+curId);
-//pbox
-//curLi.insertAdjacentHTML("beforeBegin","");
+mainForm.show();
+//mainForm.setPos(0,0,win.getScreen() );
 
-var templ = '<div class="in-box"><img src="$img" class="photo"><div class="box_contaxt"><p>$title</p><p class="show_text">$context</p></div><div class="show_time"> $time </div></div>';
-//Whttp post
-wpost=function(url,postinfo){
-    var whttp = inet.whttp();
-    var  html = whttp.post(url, postinfo);//
-   
-    result=tools.string.Encode(html);//将网页编码转换为中文 
-    whttp.close();//关闭网络连接
-    return result;
+
+//定制右键菜单
+var popmenu = win.ui.popmenu(mainForm);
+popmenu.addTable({
+	{"菜单项";function(id){
+		//
+	}};
+    {/*分隔线*/};
+    {"退出";function(id){
+        mainForm.close();
+    }};
+});
+
+//窗体消息处理函数
+mainForm.wndproc = function(hwnd,message,wParam,lParam){
+    select( message ) { 
+        case 0x205/*_WM_RBUTTONUP*/{
+            popmenu.popup()                      
+        }
+    }
 }
 
 //Whttp post
@@ -50,58 +59,57 @@ wget=function(url){
     whttp.close();//关闭网络连接
     return result;
 }
+//倒计时
+var timeMetter = function(date2){
+	var date1 = tonumber(time.now());
+	var m = math.round(tonumber(date1-date2/1000));
+	var u = "秒前";
+	if(m>=60){
+		m = math.round(m/60);
+		u = "分钟前";
+		if(m>=60){
+			m = math.round(m/60);
+			u = "小时前";
+			if(m>=24){
+				m = math.round(m/24);
+				u = "天前";
+			}
+		}
+	}
+	return tostring(m)+u;
+}
 
-var getLastedHtml = function(){
-	var html = wget("http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=7&wxNumber=tebon518");
-	//console.log(html);
+var getLastedHtml = function(url){
+	var html = wget(url);
 	var tab = web.json.parse(html);
 	var tabobj = tab["obj"];
-	//console.log(tab);
-	var pbox ="";
+	var chats ="";
 	for(k,v in tabobj){
 		var tablist = tabobj[k];
-		/**
-		for(k,v in tablist){
-			console.log(tablist[k]);
-		}
-		console.log();
-		console.log(tablist[2]);
-		console.log(tablist[3]);
-		console.log(tablist[4]);
-		console.log(tablist[5]);
-		console.log(tablist[6]);
-		**/
 		var pb = templ;
-		var context ;
-		if(tablist[1]=='1'){
-			context = "<img src='"+ tablist[2] +"'/>";
-		}else{
-			context = tablist[2];
+		var show_text ;
+		if(tablist[1]=='1'){//图片
+			show_text = "<img src='"+ tablist[2] +"'/>";
+		}else{//文字
+			show_text = tablist[2];
 		}
-		pb = string.replace(pb,"$img",tablist[5]);
-		pb = string.replace(pb,"$title",tablist[4]);
-		pb = string.replace(pb,"$context",context);
-		pb = string.replace(pb,"$time",tablist[3]);
-		pbox += pb;
-		//console.log(v);
-		//console.log(tab[k]);
+		var show_time = timeMetter(tonumber(tablist[3]));
+		pb = string.replace(pb,"$personal_photo",tablist[5]);//头像
+		pb = string.replace(pb,"$nick_name",tablist[4]);//昵称
+		pb = string.replace(pb,"$show_text",show_text);//留言
+		pb = string.replace(pb,"$show_time",show_time);//时间
+		chats += pb;
 	}
-	//console.log(tab.skuMap[ "obj" ]);
-	var person_box = wbLayout.getEle("person_box");
-	person_box.innerHTML = "";
-	person_box.innerHTML = pbox;
-	
+	var chat_area = wbLayout.getEle("chat_area");
+	chat_area.innerHTML = "";
+	chat_area.innerHTML = chats;
 };
-getLastedHtml();
-
 
 tmid = mainForm.addtimer(
-	1000/*毫秒*/,
+	0/*毫秒*/,
 	function(hwnd,msg,id,tick){//定时执行代码
-		getLastedHtml();
-		//mainForm.killtimer(id)//移除此定时器
-		//mainForm.settimer(id,2000)//重新设定时间间隔
-		return 5*1000;
+		getLastedHtml(url);//定时取数
+		return intev*1000;
 	}
 );
 
