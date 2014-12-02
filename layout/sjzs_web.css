@@ -1,0 +1,29 @@
+html{overflow-y:scroll}
+body{background:#fff;font:400 14px/1.6 "Microsoft YaHei",sans-serif;color:#333}
+body,p,h2,h3{margin:0}
+ul,ol,li{list-style:none;padding:0;margin:0}
+img{border:0}
+h2{font-weight:400}
+em,i{font-style:normal}
+a:link,a:visited{color:#70abd2;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:940px;margin:0 auto;overflow:hidden}
+.timeline .detail em,.timeline h2 em{background:url(http://p7.qhimg.com/d/inn/013ae9d6/sprites.png) no-repeat}
+
+.current-version{overflow:hidden;*zoom:1;margin:25px 0 0}
+.current-version img{float:left;margin-right:10px}
+.changelogs{background:#fff;overflow:hidden;*zoom:1}
+.changelogs h2{height:43px;line-height:43px;padding-left:1em;background:#53a932;color:#fff;font-size:20px;position:relative}
+.changelogs h2 span{position:absolute;right:10px;top:0;font-size:14px}
+.changelogs ol{border:1px solid #ecebeb;border-top:0;height:219px;padding:.5em 0 0 .5em}
+.changelogs li{padding:2px 1px;color:#7f7f7f}
+.timeline{padding:30px 0}
+.timeline h2 em,.timeline .detail em{display:inline-block;*display:inline;*zoom:1;position:absolute}
+.timeline ol{background:url(http://p4.qhimg.com/d/inn/013ae9d6/timeline.png) repeat-y 228px 0}
+.timeline ol li{overflow:hidden;*zoom:1;padding:10px 0 10px 285px;position:relative}
+.timeline ol ul li{padding:2px 0}
+.timeline h2{position:absolute;left:0;top:20px;text-align:right;width:180px;font-size:24px;margin-right:105px}
+.timeline h2 span{display:block;font-size:16px;color:#7f7f7f}
+.timeline h2 em{width:33px;height:44px;background-position:-134px 0;right:-67px;top:0}
+.timeline .detail{border:1px solid #dedede;position:relative;background:#fff;padding:10px 15px;color:#7f7f7f}
+.timeline .detail em{width:17px;height:26px;background-position:-150px -44px;left:-17px;_left:-32px;top:20px}

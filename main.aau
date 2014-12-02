@@ -20,7 +20,7 @@ if( _STUDIO_INVOKED ){
 }
 
 
-var url = "http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=9&wxNumber=tebon518";//取数地址，聊天室号
+var url =  null;//"http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=8&wxNumber=tebon518";//取数地址，聊天室号
 var intev = 5;//刷新频率
 
 wbLayout.go("/layout/main.html") 
@@ -30,6 +30,7 @@ mainForm.show();
 if(url==null){
 	var chat_area = wbLayout.getEle("chat_area");
 	chat_area.innerHTML = "<br/>您还未配置直播间信息，请点击右键配置。";
+	wbLayout.go("/layout/config.html");
 }
 var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_photo"><div class="show_content"><p class="nick_name">$nick_name</p><p class="show_text">$show_text</p></div><div class="show_time">$show_time</div></div>';
 
@@ -43,7 +44,7 @@ popmenu.addTable({
 		win.setActive(mainForm.hwnd);
 	}};
 	{"配置(&S)";function(id){
-		win.loadForm("/layout/config.aau");
+		wbLayout.go("/layout/config.html");
 	}};
     {/*分隔线*/};
     {"退出(&X)";function(id){
