@@ -8,7 +8,7 @@ import web.layout;
 import web.layout.behavior.windowCommand;
 import web.layout.behavior.tabs;
 /*DSG{{*/
-mainForm = ..win.form(text="微信墙";right=320;bottom=231;topmost=1)
+mainForm = ..win.form(text="微信墙";right=480;bottom=298;topmost=1)
 mainForm.add()
 /*}}*/
 
@@ -27,17 +27,19 @@ var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_ph
 win.ui.shadow(mainForm); //添加阴影边框
 //mainForm.transparent(true);
 mainForm.show();
-//mainForm.setPos(0,0,win.getScreen() );
-
 
 //定制右键菜单
 var popmenu = win.ui.popmenu(mainForm);
 popmenu.addTable({
-	{"菜单项";function(id){
+	{"配置(&S)";function(id){
 		//
 	}};
+	{"全屏开/关(&F)";function(id){
+		mainForm.fullscreen(); //退出全屏
+		win.setActive(mainForm.hwnd);
+	}};
     {/*分隔线*/};
-    {"退出";function(id){
+    {"退出(&X)";function(id){
         mainForm.close();
     }};
 });
@@ -46,7 +48,19 @@ popmenu.addTable({
 mainForm.wndproc = function(hwnd,message,wParam,lParam){
     select( message ) { 
         case 0x205/*_WM_RBUTTONUP*/{
-            popmenu.popup()                      
+            popmenu.popup() ;                     
+        }
+        case 0x112/*_WM_SYSCOMMAND*/{
+            if(wParam == 0xF030/*_SC_MAXIMIZE*/){//最大化
+                mainForm.fullscreen(); //
+				win.setActive(mainForm.hwnd);
+				return false;
+            }
+        }
+        case 0x100/*_WM_KEYDOWN*/{
+        	if(wParam==0x1B/*_VK_ESC*/){
+        		mainForm.fullscreen(false); 
+        	}
         }
     }
 }

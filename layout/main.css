@@ -3,7 +3,7 @@ body {
 	margin:0px;
 }
 img {border:0}
-.body_back{background-color:#6699FF;background-size:100%;}
+.body_back{background-color: #CC99FF #2eb4ff #2878be #2eb4ff;background-size:100%;}
 .title{margin:5px auto;color:#fff;font-size:30px; font-weight:bold;text-align:center;width:100%;}
 .chat_area{margin:10px;overflow:hidden}
 .chat_one{padding:10px 0px 0px 10px;overflow:hidden; background:#FFF;border-radius:10px; color:#000; position:relative;margin: 0 0 20px 0;}
