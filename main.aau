@@ -19,24 +19,31 @@ if( _STUDIO_INVOKED ){
 	wbLayout.attachEventHandler( web.layout.debug );
 }
 
-wbLayout.go("/layout/main.html") 
-var url = "http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=8&wxNumber=tebon518";//取数地址，聊天室号
-var intev = 5;//刷新频率
-var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_photo"><div class="show_content"><p class="nick_name">$nick_name</p><p class="show_text">$show_text</p></div><div class="show_time">$show_time</div></div>';
 
+var url = "http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=9&wxNumber=tebon518";//取数地址，聊天室号
+var intev = 5;//刷新频率
+
+wbLayout.go("/layout/main.html") 
 win.ui.shadow(mainForm); //添加阴影边框
 //mainForm.transparent(true);
 mainForm.show();
+if(url==null){
+	var chat_area = wbLayout.getEle("chat_area");
+	chat_area.innerHTML = "<br/>您还未配置直播间信息，请点击右键配置。";
+}
+var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_photo"><div class="show_content"><p class="nick_name">$nick_name</p><p class="show_text">$show_text</p></div><div class="show_time">$show_time</div></div>';
+
+
 
 //定制右键菜单
 var popmenu = win.ui.popmenu(mainForm);
 popmenu.addTable({
-	{"配置(&S)";function(id){
-		//
-	}};
 	{"全屏开/关(&F)";function(id){
 		mainForm.fullscreen(); //退出全屏
 		win.setActive(mainForm.hwnd);
+	}};
+	{"配置(&S)";function(id){
+		win.loadForm("/layout/config.aau");
 	}};
     {/*分隔线*/};
     {"退出(&X)";function(id){
@@ -89,6 +96,8 @@ var timeMetter = function(date2){
 				u = "天前";
 			}
 		}
+	}elseif(m<=0){//服务器时间差
+		m = 1;
 	}
 	return tostring(m)+u;
 }
@@ -96,6 +105,9 @@ var timeMetter = function(date2){
 var getLastedHtml = function(url){
 	var html = wget(url);
 	var tab = web.json.parse(html);
+	if(tab==null){//网络异常返回
+		return ;
+	}
 	var tabobj = tab["obj"];
 	var chats ="";
 	for(k,v in tabobj){

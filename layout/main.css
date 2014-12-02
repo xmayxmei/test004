@@ -1,11 +1,11 @@
 ﻿html {margin:0px;}
 body {
-	margin:0px;
+	margin:0px;font-family:'arial', 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑';
 }
 img {border:0}
-.body_back{background-color: #CC99FF #2eb4ff #2878be #2eb4ff;background-size:100%;}
+.body_back{background-color: #CC99FF #2eb4ff #2eb4ff #2878be;background-size:100%;}
 .title{margin:5px auto;color:#fff;font-size:30px; font-weight:bold;text-align:center;width:100%;}
-.chat_area{margin:10px;overflow:hidden}
+.chat_area{margin:10px;overflow:hidden;color:#fff;font-size:20px;font-weight:bold;}
 .chat_one{padding:10px 0px 0px 10px;overflow:hidden; background:#FFF;border-radius:10px; color:#000; position:relative;margin: 0 0 20px 0;}
 .personal_photo{height:70px;width:70px;border-radius:50%;float:left;padding:0;}
 .show_content{margin:0px 0px 0px 80px;padding:0;font-size:24px;color:#000; vertical-align:top}
@@ -13,3 +13,4 @@ img {border:0}
 .show_text{color:red;padding:-12px 0 0 0; line-height:32px;}
 .show_text img{}
 .show_time{position:absolute; top:6px; right:10px; font-size:18px;color:#999;}
+.config_area{margin:10px;overflow:hidden;color:#fff;font-size:20px;font-weight:bold;}
