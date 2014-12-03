@@ -9,7 +9,7 @@ import web.layout.behavior.windowCommand;
 import web.layout.behavior.windowSizer;
  
 var wbLayout = web.layout( winform )
-wbLayout.go("/res/config.html") ;
+wbLayout.go("/layout/config.html") ;
 
 winform.show() 
 win.loopMessage();

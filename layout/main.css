@@ -1,7 +1,5 @@
 ﻿html {margin:0px;}
-body {
-	margin:0px;font-family:'arial', 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑';
-}
+body {margin:0px;font-family:'arial', 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑';}
 img {border:0}
 .body_back{background-color: #CC99FF #2eb4ff #2eb4ff #2878be;background-size:100%;}
 .title{margin:5px auto;color:#fff;font-size:30px; font-weight:bold;text-align:center;width:100%;}
@@ -14,3 +12,17 @@ img {border:0}
 .show_text img{}
 .show_time{position:absolute; top:6px; right:10px; font-size:18px;color:#999;}
 .config_area{margin:10px;overflow:hidden;color:#fff;font-size:20px;font-weight:bold;}
+
+
+.wrap{width:99%;margin:0 auto;overflow:hidden}
+.current-version{overflow:hidden;margin:5px 0 0}
+.current-version img{float:left;margin-right:0px}
+.changelogs{background:#fff;overflow:hidden;float:left;display:inline;margin:0 5px;}
+.changelogs h2{height:30px;line-height:30px;padding-left:1em;background:#2eb4ff;color:#fff;font-size:16px;position:relative;margin:0}
+.changelogs h2 span{position:absolute;right:10px;top:0;font-size:14px;font-weight:400}
+.changelogs ol{list-style:none;border:1px solid #ecebeb;border-top:0;padding:.5em 0 0 .5em;margin:0}
+.changelogs li{list-style:none;padding:2px 1px;color:#7f7f7f;margin:0}
+
+.input {font-size:14px;font-weight:bold;border: 1px solid #2eb4ff;background: #ffc;}
+.button {border: 1px solid #2878be;color:#fff;background:#2eb4ff;margin:4 auto;height:20px;}
+label {display: block;width:80px;float: left;margin: 2px 4px 6px 4px;text-align: right;}
