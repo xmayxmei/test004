@@ -1,6 +1,6 @@
 import win.ui;
 /*DSG{{*/
-var winform = ..win.form(text="≈‰÷√";right=459;bottom=244;max=false;topmost=1)
+var winform = ..win.form(text="≈‰÷√";right=559;bottom=311;max=false;topmost=1)
 winform.add()
 /*}}*/
 

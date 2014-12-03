@@ -18,29 +18,57 @@ if( _STUDIO_INVOKED ){
 	import web.layout.debug;
 	wbLayout.attachEventHandler( web.layout.debug );
 }
-import sys;
-console.log( sys.getComputerName() );
-import sys.cpu;
-var cpuInfo = sys.cpu.getInfo(1,{ INT eax;INT ebx;INT ecx;INT edx } );
-var cpuid = string.format("%08X%08X",cpuInfo.edx,cpuInfo.eax );
 
-
-console.log("CPU序列号",cpuid);
-var url = null;//"http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=9&wxNumber=tebon518";//取数地址，聊天室号
+var chaturl = null;//
 var intev = 5;//刷新频率
 
 wbLayout.go("/layout/main.html");
 win.ui.shadow(mainForm); //添加阴影边框
 //mainForm.transparent(true);
 mainForm.show();
-if(url==null){
+
+//开始配置
+var startConfig = function(){
+	import sys;
+	import sys.cpu;
+	var cpuInfo = sys.cpu.getInfo(1,{ INT eax;INT ebx;INT ecx;INT edx } );
+	var cpuid = string.format("%08X%08X",cpuInfo.edx,cpuInfo.eax );
+	return cpuid,sys.getComputerName());
+}
+
+if(chaturl==null){
 	wbLayout.go("/layout/config.html");
-	wbLayout.getEle("roomname").setValueObject(sys.getComputerName()+"的群聊直播间");
-	wbLayout.getEle("createid").setValueObject(cpuid);
+	var cpuid,computerName = startConfig();
+	wbLayout.getEle("roomname").setValueObject(computerName+"的群聊直播间");
+	wbLayout.getEle("cpuid").setValueObject(cpuid);
 }
 var templ = '<div class="chat_one"><img src="$personal_photo" class="personal_photo"><div class="show_content"><p class="nick_name">$nick_name</p><p class="show_text">$show_text</p></div><div class="show_time">$show_time</div></div>';
 
 
+
+//创建房间
+var createRoom = function(cpuid){
+	var url = url+"&cpuid="+cpuid;
+	var roomid = wget(url);
+	
+}
+
+//进入
+var enterRoom = function(){
+	var roomid = wbLayout.getEle("roomid").value;
+	chaturl = "http://114.80.178.78/RoxBusiness/wxqgl/getWxqReplyInfo.3g?wxqid=9&wxNumber=tebon518";//取数地址，聊天室号
+	wbLayout.go("/layout/main.html");
+}
+
+//按钮相应
+wbLayout.onButtonClick = function (ltTarget,ltOwner,reason,behaviorParams) {
+	if(ltOwner.id="play"){//直播
+    	enterRoom();
+    }elseif(ltOwner.id="create"){//创建
+    	var cpuid = wbLayout.getEle("cpuid").value;
+    	var roomid = createRoom(cpuid);
+    }
+}
 
 //定制右键菜单
 var popmenu = win.ui.popmenu(mainForm);
@@ -141,7 +169,7 @@ var getLastedHtml = function(url){
 tmid = mainForm.addtimer(
 	0/*毫秒*/,
 	function(hwnd,msg,id,tick){//定时执行代码
-		getLastedHtml(url);//定时取数
+		getLastedHtml(chaturl);//定时取数
 		return intev*1000;
 	}
 );
